@@ -12,7 +12,7 @@ class Register(QMainWindow):
         super().__init__()
 
         # Set up the user interface from Designer
-        self.reg_ui = loadUi("reg.ui", self)
+        self.reg_ui = loadUi("ui/reg.ui", self)
         # Connects buttons with screen switcher and registration methods
         self.reg_ui.pushButton_2.clicked.connect(self.switch_to_login)
         self.reg_ui.pushButton.clicked.connect(self.register)
@@ -70,7 +70,7 @@ class Login(QMainWindow):
         super().__init__()
 
         # Set up the user interface from Designer
-        self.log_ui = loadUi("login.ui", self)
+        self.log_ui = loadUi("ui/login.ui", self)
 
         self.log_ui.pushButton_2.clicked.connect(self.switch_to_register)
         self.log_ui.pushButton.clicked.connect(self.login)
