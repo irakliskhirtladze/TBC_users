@@ -126,7 +126,7 @@ if __name__ == "__main__":
     widget.setFixedHeight(400)
     widget.setFixedWidth(600)
     widget.setWindowTitle("TBC Academy")
-    widget.setWindowIcon(QIcon("tbcicon.png"))
+    widget.setWindowIcon(QIcon("resources/tbcicon.png"))
     widget.show()
 
     sys.exit(app.exec_())

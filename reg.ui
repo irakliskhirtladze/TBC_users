@@ -250,7 +250,7 @@ background:rgb(211, 211, 211)
      <string/>
     </property>
     <property name="pixmap">
-     <pixmap>logo.png</pixmap>
+     <pixmap>resources/logo.png</pixmap>
     </property>
     <property name="scaledContents">
      <bool>true</bool>
