@@ -5,6 +5,10 @@ from PyQt5.QtWidgets import QApplication, QMainWindow, QStackedWidget
 from PyQt5.uic import loadUi
 from PyQt5.QtGui import QIcon
 
+def hash_password(password) -> str:
+         """Returns encrypted password"""
+         return hashlib.sha256(password.encode()).hexdigest()
+
 class Register(QMainWindow):
     """A class to let user register in the system"""
 
@@ -20,10 +24,6 @@ class Register(QMainWindow):
     def switch_to_login(self) -> None:
         """Allows an user to switch to login screen"""
         widget.setCurrentIndex(widget.currentIndex() + 1)
-
-    def hash_password(self, password) -> str:
-         """Returns encrypted password"""
-         return hashlib.sha256(password.encode()).hexdigest()
 
     def register(self) -> None:
         """Gets a database ready.
@@ -53,7 +53,7 @@ class Register(QMainWindow):
             self.reg_ui.label_4.setText("Password must be at least 4 charachters")
         else:
             try: # Writing to DB can fail when it's used concurrently
-                hashed_password = self.hash_password(self.password)
+                hashed_password = hash_password(self.password)
                 curs.execute("INSERT INTO users (email, password) VALUES (?, ?)", (self.email, hashed_password))
                 conn.commit()
                 self.reg_ui.label_4.setStyleSheet("color: green")
@@ -66,6 +66,7 @@ class Register(QMainWindow):
             
 class Login(QMainWindow):
     """A class to handle user login"""
+
     def __init__(self) -> None:
         super().__init__()
 
@@ -81,7 +82,7 @@ class Login(QMainWindow):
 
     def check_password(self, entered_password, stored_password) -> bool: 
         """Returns Boolean value of password validity"""
-        return Register.hash_password(self, entered_password) == stored_password
+        return hash_password(entered_password) == stored_password
     
     def read_db(self) -> dict:
         """Opens and extracts data from database"""
