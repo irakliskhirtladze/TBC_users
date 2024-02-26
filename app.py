@@ -43,24 +43,24 @@ class Register(QMainWindow):
 
         # Control flow depending on registration rules
         if self.email in emails: 
-            self.reg_ui.label_4.setStyleSheet("color: red; background-color:transparent; font-weight: bold")
+            self.reg_ui.label_4.setStyleSheet("color: red; background-color:transparent")
             self.reg_ui.label_4.setText("This email is already registered")
         elif "@" not in self.email:
-            self.reg_ui.label_4.setStyleSheet("color: red; background-color:transparent; font-weight: bold")
+            self.reg_ui.label_4.setStyleSheet("color: red; background-color:transparent")
             self.reg_ui.label_4.setText("Invalid email")
         elif len(self.password) < 4:
-            self.reg_ui.label_4.setStyleSheet("color: red; background-color:transparent; font-weight: bold")
+            self.reg_ui.label_4.setStyleSheet("color: red; background-color:transparent")
             self.reg_ui.label_4.setText("Password must be at least 4 charachters")
         else:
             try: # Writing to DB can fail when it's used concurrently
                 hashed_password = hash_password(self.password)
                 curs.execute("INSERT INTO users (email, password) VALUES (?, ?)", (self.email, hashed_password))
                 conn.commit()
-                self.reg_ui.label_4.setStyleSheet("color: green; background-color:transparent; font-weight: bold")
+                self.reg_ui.label_4.setStyleSheet("color: green; background-color:transparent")
                 self.reg_ui.label_4.setText("Registration successful!")
                 conn.close()
             except sqlite3.OperationalError:
-                self.reg_ui.label_4.setStyleSheet("color: red; background-color:transparent; font-weight: bold")
+                self.reg_ui.label_4.setStyleSheet("color: red; background-color:transparent")
                 self.reg_ui.label_4.setText("Could not save to database. Close if it is open!")
             
             
@@ -102,14 +102,14 @@ class Login(QMainWindow):
 
         # Checks login rules and tries to login
         if self.email not in self.read_db():
-            self.log_ui.label_4.setStyleSheet("color: red; background-color:transparent; font-weight: bold")
+            self.log_ui.label_4.setStyleSheet("color: red; background-color:transparent")
             self.log_ui.label_4.setText("No such email found!")
         elif not self.check_password(self.password, self.read_db()[self.email]):
-            self.log_ui.label_4.setStyleSheet("color: red; background-color:transparent; font-weight: bold")
+            self.log_ui.label_4.setStyleSheet("color: red; background-color:transparent")
             self.log_ui.label_4.setText("Password is incorrect!")
         else:
             try: # Catches any exception (needs testing)
-                self.log_ui.label_4.setStyleSheet("color: green; background-color:transparent; font-weight: bold")
+                self.log_ui.label_4.setStyleSheet("color: green; background-color:transparent")
                 self.log_ui.label_4.setText("Login successful!")
             except Exception as e:
                 print(e)

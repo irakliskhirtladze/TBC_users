@@ -241,7 +241,7 @@ QPushButton:pressed {
              <widget class="QLabel" name="label_4">
               <property name="font">
                <font>
-                <pointsize>15</pointsize>
+                <pointsize>13</pointsize>
                </font>
               </property>
               <property name="styleSheet">
