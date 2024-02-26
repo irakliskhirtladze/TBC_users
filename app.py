@@ -25,6 +25,10 @@ class Register(QMainWindow):
         """Allows an user to switch to login screen"""
         widget.setCurrentIndex(widget.currentIndex() + 1)
 
+        # Clears the info label when switching window
+        self.reg_ui.label_4.setStyleSheet("color: transparent; background-color:transparent")
+        self.reg_ui.label_4.setText("")
+
     def register(self) -> None:
         """Gets a database ready.
         Then checks for user input and tries to write credentials to DB.
@@ -79,6 +83,10 @@ class Login(QMainWindow):
     def switch_to_register(self) -> None:
         """Allows an user to switch to registration screen"""
         widget.setCurrentIndex(widget.currentIndex() - 1)
+
+        # Clears the info label when switching window
+        self.log_ui.label_4.setStyleSheet("color: transparent; background-color:transparent")
+        self.log_ui.label_4.setText("")
 
     def check_password(self, entered_password, stored_password) -> bool: 
         """Returns Boolean value of password validity"""
