@@ -38,29 +38,29 @@ class Register(QMainWindow):
         emails = [i[0] for i in rows]
 
         # Reads user input
-        self.email = self.reg_ui.lineEdit_2.text()
-        self.password = self.reg_ui.lineEdit.text()
+        self.email = self.reg_ui.lineEdit.text()
+        self.password = self.reg_ui.lineEdit_2.text()
 
         # Control flow depending on registration rules
         if self.email in emails: 
-            self.reg_ui.label_4.setStyleSheet("color: red")
+            self.reg_ui.label_4.setStyleSheet("color: red; background-color:transparent; font-weight: bold")
             self.reg_ui.label_4.setText("This email is already registered")
         elif "@" not in self.email:
-            self.reg_ui.label_4.setStyleSheet("color: red")
+            self.reg_ui.label_4.setStyleSheet("color: red; background-color:transparent; font-weight: bold")
             self.reg_ui.label_4.setText("Invalid email")
         elif len(self.password) < 4:
-            self.reg_ui.label_4.setStyleSheet("color: red")
+            self.reg_ui.label_4.setStyleSheet("color: red; background-color:transparent; font-weight: bold")
             self.reg_ui.label_4.setText("Password must be at least 4 charachters")
         else:
             try: # Writing to DB can fail when it's used concurrently
                 hashed_password = hash_password(self.password)
                 curs.execute("INSERT INTO users (email, password) VALUES (?, ?)", (self.email, hashed_password))
                 conn.commit()
-                self.reg_ui.label_4.setStyleSheet("color: green")
+                self.reg_ui.label_4.setStyleSheet("color: green; background-color:transparent; font-weight: bold")
                 self.reg_ui.label_4.setText("Registration successful!")
                 conn.close()
             except sqlite3.OperationalError:
-                self.reg_ui.label_4.setStyleSheet("color: red")
+                self.reg_ui.label_4.setStyleSheet("color: red; background-color:transparent; font-weight: bold")
                 self.reg_ui.label_4.setText("Could not save to database. Close if it is open!")
             
             
@@ -97,19 +97,19 @@ class Login(QMainWindow):
         """Lets user login to system if registered"""
 
         # Reads user input
-        self.email = self.log_ui.lineEdit_2.text()
-        self.password = self.log_ui.lineEdit_3.text()
+        self.email = self.log_ui.lineEdit.text()
+        self.password = self.log_ui.lineEdit_2.text()
 
         # Checks login rules and tries to login
         if self.email not in self.read_db():
-            self.log_ui.label_4.setStyleSheet("color: red")
+            self.log_ui.label_4.setStyleSheet("color: red; background-color:transparent; font-weight: bold")
             self.log_ui.label_4.setText("No such email found!")
         elif not self.check_password(self.password, self.read_db()[self.email]):
-            self.log_ui.label_4.setStyleSheet("color: red")
+            self.log_ui.label_4.setStyleSheet("color: red; background-color:transparent; font-weight: bold")
             self.log_ui.label_4.setText("Password is incorrect!")
         else:
             try: # Catches any exception (needs testing)
-                self.log_ui.label_4.setStyleSheet("color: green")
+                self.log_ui.label_4.setStyleSheet("color: green; background-color:transparent; font-weight: bold")
                 self.log_ui.label_4.setText("Login successful!")
             except Exception as e:
                 print(e)
@@ -124,8 +124,6 @@ if __name__ == "__main__":
     widget.addWidget(regWindow)
     widget.addWidget(logWindow)
 
-    widget.setFixedHeight(400)
-    widget.setFixedWidth(600)
     widget.setWindowTitle("TBC Academy")
     widget.setWindowIcon(QIcon("resources/tbcicon.png"))
     widget.show()
